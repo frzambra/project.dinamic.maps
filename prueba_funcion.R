@@ -21,6 +21,7 @@ mapCom(shp,data,fill='X1',shp.u='COD_COMUNA',data.u='cod')
 #Defino clases de valores para mapear de forma discreta
 data2map<-data.frame(cod=data$cod,value=cut(data$X1*100,seq(0,100,10),include.lowest=TRUE))
 
+#Define colores para las clases
 values<-c("[0,10]"="#8B0000","(10,20]"="#A43800","(20,30]"="#BE7100","(30,40]"="#D8AA00",
           "(40,50]"="#F2E200","(50,60]"="#E2ED00","(60,70]"="#AACB00","(70,80]"="#71A800",
           "(80,90]"="#388600","(90,100]"="#006400")
