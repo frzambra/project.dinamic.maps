@@ -2,7 +2,7 @@
 #author: Francisco Zambrano Bigiarini (frzambra@gmail.com)
 #agosto 2014
 
-mapCom<-function(shp,data,fill=NA,shp.u=NA,data.u=NA,fill.values=NA){
+mapCom<-function(shp,data,fill=NA,shp.u=NA,data.u=NA,fill.values=NA,...){
   
   require(ggplot2)
   
@@ -12,7 +12,7 @@ mapCom<-function(shp,data,fill=NA,shp.u=NA,data.u=NA,fill.values=NA){
     geom_map(aes_string(fill=fill),colour='black',map = shp.f)+
     expand_limits(x = shp.f$long, y = shp.f$lat)
   
-    if (exists('fill.values')){
+    if (!missing(fill.values)){
       plot<-plot+scale_fill_manual(values=fill.values)
     }
   
