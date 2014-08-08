@@ -1,21 +1,22 @@
-# Prueba de función mapCom para realizar mapa de valores comunales
+# Prueba de funci?n mapCom para realizar mapa de valores comunales
 # Francisco Zambrano Bigiarini (frzambra@gmail.com)
 # agosto 2014
 
 require('maptools')
+require('rgeos')
 source('modisDate.R')
 source('mapCom.R')
 
-#data.frame en que cada columna corresponde a un periodo y cada fila a una comuna de la región
+#data.frame en que cada columna corresponde a un periodo y cada fila a una comuna de la regi?n
 data<-read.csv2('data/data.csv')
 
 #objeto Date que corresponde a las fechas de cada columna
 dates<-modisDate(as.Date(c('2000-02-18','2014-07-28')))
 
-#poligono de la región del Bío-Bío con las 54 comunas
+#poligono de la regi?n del B?o-B?o con las 54 comunas
 shp<-readShapePoly('shp/r8.shp')
 
-#aplica función mapCom para generar mapa con valores continuos
+#aplica funci?n mapCom para generar mapa con valores continuos
 mapCom(shp,data,fill='X1',shp.u='COD_COMUNA',data.u='cod')
 
 #Defino clases de valores para mapear de forma discreta
@@ -27,3 +28,5 @@ values<-c("[0,10]"="#8B0000","(10,20]"="#A43800","(20,30]"="#BE7100","(30,40]"="
           "(80,90]"="#388600","(90,100]"="#006400")
 
 mapCom(shp,data=data2map,fill='value',shp.u='COD_COMUNA',data.u='cod',fill.values=values)
+
+
