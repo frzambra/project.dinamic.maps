@@ -16,10 +16,10 @@ reg<-"r4"
 fecha<-1 #corresponde a dates[1]
 
 #data.frame en que cada columna corresponde a un periodo y cada fila a una comuna de la regi?n
-data<-read.csv2(paste0('data/',reg,'_data.csv'))
+data<-read.csv2(paste0('../data/',reg,'_data.csv'))
 
 #poligono de la regi?n del B?o-B?o con las 54 comunas
-shp<-readShapePoly(paste0('shp/',reg,'.shp'))
+shp<-readShapePoly(paste0('../shp/',reg,'.shp'))
 
 #aplica funci?n mapCom para generar mapa con valores continuos
 #names(data)[3] para que plotee la tercera columna del data.frame

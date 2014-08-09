@@ -1,0 +1,14 @@
+#date_input > input {
+  height: 37px;
+  width: 95%
+}
+
+body {
+  background-color: #f1f1f1;
+}
+
+.span3, .span9 {
+  background-color: white;
+  padding: 10px;
+}
+
