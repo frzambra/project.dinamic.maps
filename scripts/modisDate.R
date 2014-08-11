@@ -17,6 +17,7 @@ setMethod('modisDate', signature(x='character'),
 
 setMethod('modisDate',signature(x='Date'),
           function(x, by='16 days'){
+
             if (length(x)<2){
               dates<-julian(as.Date(x))-julian(as.Date(paste0(format(x,"%Y"),"-01-01")))
               dates<-paste0(format(x,"%Y"),sprintf("%03d",as.numeric(dates)+1))
