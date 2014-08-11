@@ -8,7 +8,7 @@ source('modisDate.R')
 source('mapCom.R')
 
 #objeto Date que corresponde a las fechas en cada columna
-dates<-modisDate(as.Date(c('2000-02-18','2014-07-28')))
+dates <- modisDate(as.Date(c('2000-02-18','2014-07-28')))
 
 #region para la cual se desea hacer el mapa entre "r4" (cuarta region)
 #a "r10" (decima region)
