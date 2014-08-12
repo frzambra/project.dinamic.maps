@@ -5,8 +5,6 @@ options(stringsAsFactors = FALSE)
 source('modisDate.R')
 source('mapCom.R')
 
-
-
 data <- ldply(dir("../data/", pattern =  "csv$", full.names = TRUE), function(file){ # file <- dir("../data/",  pattern =  "csv$", full.names = TRUE)[1]
   d <- read.csv2(file)
   d <- cbind(region = as.numeric(str_extract(file, "\\d+")), d)

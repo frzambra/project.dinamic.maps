@@ -1,4 +1,5 @@
 library(shiny)
+load("data/data_app.RData")
 
 shinyUI(
   fluidPage(
@@ -9,9 +10,9 @@ shinyUI(
     br(),
     fluidRow(
       column(width = 3, id = "side_menu",
-             h4("Análisis de Lorem Ipsum"),
+             h4("Analisis de Lorem Ipsum"),
              hr(),
-             p("Escoge una región y un fecha:"),
+             p("Escoge una region y un fecha:"),
              selectInput("region_input", NULL, regiones_select, selectize = TRUE, width = "100%"),
              dateInput("date_input", NULL, value = max(dates_select), format = "yyyy/mm/dd",
                        language = "es", min = min(dates_select), max = max(dates_select)),

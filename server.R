@@ -23,7 +23,7 @@ shinyServer(function(input, output) {
     
     col <- paste0("V", which.min(abs(ymd(dates_select) - ymd(input$date_input)))[1])
     d <- subset(data, subset = region == input$region_input, select =  c("Comuna", col))
-    names(d)[2] <- paste("Sequía", dates_select[which.min(abs(ymd(dates_select) - ymd(input$date_input)))[1]])
+    names(d)[2] <- paste("Sequia", dates_select[which.min(abs(ymd(dates_select) - ymd(input$date_input)))[1]])
     d
   }, options = list(aLengthMenu = c(5, 10, 20), iDisplayLength = 5))  
 
