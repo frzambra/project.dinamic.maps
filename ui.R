@@ -1,5 +1,5 @@
 library(shiny)
-load("data/data_app.RData")
+load("data/data_app2.RData")
 
 shinyUI(
   fluidPage(
@@ -10,18 +10,23 @@ shinyUI(
     br(),
     fluidRow(
       column(width = 3, id = "side_menu",
-             h4("Analisis de Lorem Ipsum"),
+             h4("Analisis"),
              hr(),
-             p("Escoge una region y un fecha:"),
-             selectInput("region_input", NULL, regiones_select, selectize = TRUE, width = "100%"),
-             dateInput("date_input", NULL, value = max(dates_select), format = "yyyy/mm/dd",
+             p("Escoge una region y fechas a comparar:"),
+             selectInput("region_input", NULL, regiones_select, selectize = TRUE),
+             dateInput("date_input_1", NULL, value = min(dates_select), format = "yyyy/mm/dd",
+                       language = "es", min = min(dates_select), max = max(dates_select)),
+             dateInput("date_input_2", NULL, value = max(dates_select), format = "yyyy/mm/dd",
                        language = "es", min = min(dates_select), max = max(dates_select)),
              hr(),
-             p("Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. ")
+             p(" ")
       ),
       column(width = 9,
              tabsetPanel(id = 'panel',
-                         tabPanel('Plot', br(), plotOutput("plot_sequia")),
+                         tabPanel('Plot', br(), textOutput("text_1"),
+                                  fluidRow(
+                                    column(width = 6, plotOutput("plot_1")),
+                                    column(width = 6, plotOutput("plot_2")))),
                          tabPanel('Table', br(), dataTableOutput("table_sequia"))
              )
       )
