@@ -9,29 +9,44 @@ load("data/data_app2.RData")
 # test input
 # input <- list(region_input = 4, date_input_1 = "2008-04-05", date_input_2 = "2013-06-05")
 shinyServer(function(input, output) {
-  
   output$text_1 <- renderText({ 
     paste("Comparando", input$date_input_1, "con", input$date_input_2)
   })
   
+  
   output$plot_1 <- renderPlot({
-    
+    #data<-ifelse(input$indice_input=='VCI',data_vci,data_sndvi)
     shp <- readShapePoly(file.path('shp', paste0("r", input$region_input, ".shp")))
     col <- paste0("V", which.min(abs(ymd(dates_select) - ymd(input$date_input_1)))[1])
     
-    data2map <- data.frame(cod=data$cod, value=cut(data[,col],seq(0,100,10),include.lowest=TRUE))
-    p <- mapCom(shp,data=data2map, fill='value', shp.u='COD_COMUNA', data.u='cod', fill.values=color_palette)
+    if (input$indice_input=='VCI'){
+      data<-data_vci
+      data2map <- data.frame(cod=data$cod, value=cut(data[,col],seq(0,100,10),include.lowest=TRUE))
+      p <- mapCom(shp,data=data2map, fill='value', shp.u='COD_COMUNA', data.u='cod', fill.values=color_palette)
+    }else {
+      data<-data_sndvi
+      data2map <- data.frame(cod=data$cod, value=cut(data[,col],c(-10,seq(-2,by=0.5,length.out=9),10),include.lowest=TRUE))
+      p <- mapCom(shp,data=data2map, fill='value', shp.u='COD_COMUNA', data.u='cod', fill.values=color_palette2)      
+    }
     print(p)
     
   })
   
   output$plot_2 <- renderPlot({
-    
+    if (input$indice_input=='VCI'){data<-data_vci}else{data<-data_sndvi}
     shp <- readShapePoly(file.path('shp', paste0("r", input$region_input, ".shp")))
     col <- paste0("V", which.min(abs(ymd(dates_select) - ymd(input$date_input_2)))[1])
     
-    data2map <- data.frame(cod=data$cod, value=cut(data[,col],seq(0,100,10),include.lowest=TRUE))
-    p <- mapCom(shp,data=data2map, fill='value', shp.u='COD_COMUNA', data.u='cod', fill.values=color_palette)
+    if (input$indice_input=='VCI'){
+      data<-data_vci
+      data2map <- data.frame(cod=data$cod, value=cut(data[,col],seq(0,100,10),include.lowest=TRUE))
+      p <- mapCom(shp,data=data2map, fill='value', shp.u='COD_COMUNA', data.u='cod', fill.values=color_palette)
+    }else {
+      data<-data_sndvi
+      data2map <- data.frame(cod=data$cod, value=cut(data[,col],c(-10,seq(-2,by=0.5,length.out=9),10),include.lowest=TRUE))
+      p <- mapCom(shp,data=data2map, fill='value', shp.u='COD_COMUNA', data.u='cod', fill.values=color_palette2)
+    }
+    
     print(p)
     
   })
