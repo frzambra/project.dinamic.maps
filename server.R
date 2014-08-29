@@ -14,28 +14,30 @@ shinyServer(function(input, output) {
     paste("Comparando", input$date_input_1, "con", input$date_input_2)
   })
   
-  output$plot_1 <- renderPlot({
+  output$mymap <- renderUI({
     
-    shp <- readShapePoly(file.path('shp', paste0("r", input$region_input, ".shp")))
-    col <- paste0("V", which.min(abs(ymd(dates_select) - ymd(input$date_input_1)))[1])
+    shp <- readShapePoly(file.path('shp', paste0("r", input$region_input, ".shp")),
+                         proj4string=CRS('+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0'))
+    Encoding(levels(shp$NOM_COM))<-'latin1'
+    Encoding(levels(shp$NOM_PROV))<-'latin1'
+    Encoding(levels(shp$NOM_REG))<-'latin1'
+  
+    #col <- paste0("V", which.min(abs(ymd(dates_select) - ymd(input$date_input_1)))[1])
     
-    data2map <- data.frame(cod=data$cod, value=cut(data[,col],seq(0,100,10),include.lowest=TRUE))
-    p <- mapCom(shp,data=data2map, fill='value', shp.u='COD_COMUNA', data.u='cod', fill.values=color_palette)
-    print(p)
+    #data2map <- data.frame(cod=data$cod, value=cut(data[,col],seq(0,100,10),include.lowest=TRUE))
+    #p <- mapCom(shp,data=data2map, fill='value', shp.u='COD_COMUNA', data.u='cod', fill.values=color_palette)
+    m<-plotGoogleMaps(shp,filename = 'myMap1.html', openMap = F,zcol="SHAPE_Area",
+                      mapTypeId='TERRAIN',colPalette= terrain.colors(7),
+                      strokeColor="white")
+    tags$iframe(
+      srcdoc = paste(readLines('myMap1.html'), collapse = '\n'),
+      width = "900Px",
+      height = "500Px"
+    )
     
   })
   
-  output$plot_2 <- renderPlot({
-    
-    shp <- readShapePoly(file.path('shp', paste0("r", input$region_input, ".shp")))
-    col <- paste0("V", which.min(abs(ymd(dates_select) - ymd(input$date_input_2)))[1])
-    
-    data2map <- data.frame(cod=data$cod, value=cut(data[,col],seq(0,100,10),include.lowest=TRUE))
-    p <- mapCom(shp,data=data2map, fill='value', shp.u='COD_COMUNA', data.u='cod', fill.values=color_palette)
-    print(p)
-    
-  })
-  
+
   output$table_sequia <- renderDataTable({
     
     col1 <- paste0("V", which.min(abs(ymd(dates_select) - ymd(input$date_input_1)))[1])
@@ -48,3 +50,4 @@ shinyServer(function(input, output) {
   }, options = list(aLengthMenu = c(5, 10, 20), iDisplayLength = 5))  
 
 })
+
