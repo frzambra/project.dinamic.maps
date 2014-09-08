@@ -15,6 +15,8 @@ shinyUI(
              hr(),
              p("Escoge una region y fechas a comparar:"),
              selectInput("region_input", NULL, regiones_select, selectize = TRUE),
+             dateInput("date_input_1", NULL, value = min(dates_select), format = "yyyy/mm/dd",
+                       language = "es", min = min(dates_select), max = max(dates_select)),
              hr(),
              p(" ")
       ),

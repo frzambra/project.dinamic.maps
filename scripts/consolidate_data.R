@@ -44,3 +44,13 @@ color_palette2 <-c("[-10,-2]"="#8B0000","(-2,-1.5]"="#A43800",
                    "(1.5,2]"="#388600","(2,10]"="#006400")
 
 save(data_vci,data_sndvi,indice_select, regiones_select, dates_select, mapCom, color_palette,color_palette2, file = "../data/data_app2.RData")
+
+#Depurando las tablas .dbf de los shapes
+library(foreign)
+files<-list.files('../shp/',pattern='*.dbf$')
+lapply(files,FUN=function(x){
+  dbf<-read.dbf(paste0('../shp/',x))
+  dbf<-dbf[,c(1:3,7)]
+  write.dbf(dbf,file=paste0('../shp/',x))
+  return(dbf)
+})

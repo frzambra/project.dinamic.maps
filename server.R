@@ -4,6 +4,7 @@ library(maptools)
 library(rgeos)
 library(lubridate)
 library(scales)
+library(plotGoogleMaps)
 load("data/data_app2.RData")
 
 # test input
@@ -22,12 +23,13 @@ shinyServer(function(input, output) {
     Encoding(levels(shp$NOM_PROV))<-'latin1'
     Encoding(levels(shp$NOM_REG))<-'latin1'
   
-    #col <- paste0("V", which.min(abs(ymd(dates_select) - ymd(input$date_input_1)))[1])
-    
-    #data2map <- data.frame(cod=data$cod, value=cut(data[,col],seq(0,100,10),include.lowest=TRUE))
-    #p <- mapCom(shp,data=data2map, fill='value', shp.u='COD_COMUNA', data.u='cod', fill.values=color_palette)
-    m<-plotGoogleMaps(shp,filename = 'myMap1.html', openMap = F,zcol="SHAPE_Area",
-                      mapTypeId='TERRAIN',colPalette= terrain.colors(7),
+    col <- paste0("V", which.min(abs(ymd(dates_select) - ymd(input$date_input_1)))[1])
+    data<-subset(data,region==input$region_input)
+    shp@data$VCI<-cut(data[,col],seq(0,100,10),include.lowest=TRUE)
+    #mapCom(shp,data=data2map, fill='value', shp.u='COD_COMUNA', data.u='cod', fill.values=color_palette)
+    m<-plotGoogleMaps(shp,filename = 'myMap1.html', openMap = F,zcol="VCI",
+                      mapTypeId='TERRAIN',colPalette= color_palette,layerName='Indice VCI',
+                      control.width="50%",
                       strokeColor="white")
     tags$iframe(
       srcdoc = paste(readLines('myMap1.html'), collapse = '\n'),
