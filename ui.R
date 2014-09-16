@@ -12,12 +12,10 @@ shinyUI(
       column(width = 3, id = "side_menu",
              h4("Analisis"),
              hr(),
-             p("Escoge una region y fechas a comparar:"),
-             selectInput("region_input", NULL, regiones_select, selectize = TRUE),
-             dateInput("date_input_1", NULL, value = min(dates_select), format = "yyyy/mm/dd",
-                       language = "es", min = min(dates_select), max = max(dates_select)),
-             dateInput("date_input_2", NULL, value = max(dates_select), format = "yyyy/mm/dd",
-                       language = "es", min = min(dates_select), max = max(dates_select)),
+             p("Escoge una region, indicador y fechas a comparar:"),
+             selectizeInput("region_input", NULL, regiones_select),
+             selectizeInput("indicator_input", NULL, indicator_select),
+             selectizeInput("dates_input", NULL, dates_select, selected = sort(sample(dates_select, 4)), multiple = TRUE, options = list(maxItems = 4)),
              hr(),
              p(" ")
       ),
@@ -25,8 +23,11 @@ shinyUI(
              tabsetPanel(id = 'panel',
                          tabPanel('Plot', br(), textOutput("text_1"),
                                   fluidRow(
-                                    column(width = 6, plotOutput("plot_1")),
-                                    column(width = 6, plotOutput("plot_2")))),
+                                    column(width = 3, plotOutput("plot_1")),
+                                    column(width = 3, plotOutput("plot_2")),
+                                    column(width = 3, plotOutput("plot_3")),
+                                    column(width = 3, plotOutput("plot_4"))
+                                    )),
                          tabPanel('Table', br(), dataTableOutput("table_sequia"))
              )
       )
