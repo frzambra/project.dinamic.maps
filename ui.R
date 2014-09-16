@@ -1,5 +1,5 @@
 library(shiny)
-load("data/data_app2.RData")
+load("data/data.RData")
 
 shinyUI(
   fluidPage(

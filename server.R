@@ -4,7 +4,7 @@ library(maptools)
 library(rgeos)
 library(lubridate)
 library(scales)
-load("data/data_app2.RData")
+load("data/data.RData")
 
 # test input
 # input <- list(region_input = 4, dates_input = c("2008-04-05", "2013-06-05"), indicator_input = "sequia")
