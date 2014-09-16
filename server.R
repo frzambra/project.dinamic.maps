@@ -16,7 +16,7 @@ shinyServer(function(input, output) {
   shp_reactive <- reactive({ readShapePoly(file.path("shp", paste0("r", input$region_input, ".shp"))) }) 
   
   output$text_1 <- renderText({ 
-    paste("Comparando", paste(input$dates_input, collapse = ", "))
+    paste("Comparando", input$indicator_input," en las fechas", paste(input$dates_input, collapse = ", "))
   })
   
   output$plot_1 <- renderPlot({  
